@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in</title>
+    <style>
+        /* Stili elementu centrēšanai */
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+           background-image: url('https://i.pinimg.com/474x/00/29/10/002910294c7c801e813afec531fd6f38.jpg'); /* Fona attēls */
+        }
+
+        .container {
+            text-align: center;
+            width: 300px; /* Konteineru platumu */
+            background-color: #fff; /* Konteinera fona krāsa */
+            border-radius: 5px; /* Stūru apaļošana */
+            padding: 20px; /* Iekšējais atkāpums */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Konteinera ēna */
+        }
+
+        .header {
+            margin-bottom: 20px; /* Atkāpums apakšā no galvenes */
+        }
+
+        .form-group {
+            margin-bottom: 20px; /* Atkāpums apakšā no formu grupām */
+            text-align: left; /* Izlīdzināt tekstu pa kreisi */
+        }
+
+        .form-group label {
+            display: block; /* Bloka elements */
+            margin-bottom: 5px; /* Atstarpe starp ievades laukiem un etiķetēm */
+            font-weight: bold; /* Treknrakstā etiķetes */
+        }
+
+        .form-group input {
+            width: 100%; /* Ievades lauka platums */
+            box-sizing: border-box; /* Iekļaut robežas platumā */
+            padding: 10px; /* Iekšējais atkāpums ap ievades laukiem */
+            border: 1px solid #ccc; /* Ievades lauka robeža */
+            border-radius: 3px; /* Stūru apaļošana ievades laukam */
+        }
+
+        .btn {
+            width: 100%; /* Pogas platums vienāds ar konteinera platumu */
+            background-color: #007bff; /* Pogas fona krāsa */
+            color: #fff; /* Teksta krāsa uz pogas */
+            padding: 10px; /* Iekšējais atkāpums ap tekstu uz pogas */
+            border: none; /* Bez pogas robežas */
+            border-radius: 3px; /* Stūru apaļošana pogai */
+            cursor: pointer; /* Maina kursoru pārvietošanās laikā */
+            transition: background-color 0.3s; /* Plāna pāreja pogas fona krāsai */
+        }
+
+        .btn:hover {
+            background-color: #0056b3; /* Maina fona krāsu pārvietojot kursoru virs pogas */
+        }
+
+        .error-message {
+            color: red; /* Teksta krāsa kļūdu ziņojumiem */
+            font-size: 14px; /* Fonta izmērs kļūdu ziņojumiem */
+            margin-top: 5px; /* Atstarpe virs kļūdu ziņojumiem */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Log in</h1> <!-- Galvenes teksts -->
+        </div>
+        <form action="{{ url_for('login') }}" method="POST">
+            <div class="form-group">
+                <label for="username">Username</label> <!-- Etiķete lietotājvārdam -->
+                <input type="text" name="username" id="username" required> <!-- Ievades lauks lietotājvārdam -->
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label> <!-- Etiķete paroliem -->
+                <input type="password" name="password" id="password" required> <!-- Ievades lauks paroliem -->
+            </div>
+            <button type="submit" class="btn">Log in</button> <!-- Pogas iesniegšanas poga -->
+        </form>
+        {% if error_message %}
+            <p class="error-message">{{ error_message }}</p> <!-- Kļūdu ziņojums, ja notiek neveiksme -->
+        {% endif %}
+    </div>
+</body>
+</html>

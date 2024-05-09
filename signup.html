@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+    <style>
+        /* Stili elementu centrēšanai */
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif; /* Fonta stils */
+            background-image: url('https://i.pinimg.com/474x/00/29/10/002910294c7c801e813afec531fd6f38.jpg'); /* Fona attēls */
+            background-size: cover; /* Fona attēla izmēra pielāgošana */
+        }
+
+        .container {
+            text-align: center;
+            width: 300px; /* Konteineru platumu */
+            background-color: #fff; /* Konteineru fona krāsu */
+            padding: 20px; /* Iekšējās atstarpes */
+            border-radius: 10px; /* Stūru apaļošana konteineram */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Konteineram ēna */
+        }
+
+        .header {
+            margin-bottom: 20px; /* Atstarpe zem galvenes */
+        }
+
+        .form-group {
+            margin-bottom: 20px; /* Atstarpe starp formu grupām */
+            text-align: left; /* Teksta izlīdzināšana pa kreisi */
+        }
+
+        .form-group label {
+            display: block; /* Bloka elements */
+            margin-bottom: 5px; /* Atstarpe starp etiķeti un ievades lauku */
+        }
+
+        .form-group input {
+            width: 100%; /* Ievades lauka platums */
+            box-sizing: border-box; /* Iekļaut apmales iekš platuma */
+            padding: 8px; /* Ievades lauka apmales */
+            border: 1px solid #ccc; /* Ievades lauka rāmis */
+            border-radius: 4px; /* Stūru apaļošana ievades laukam */
+            font-size: 14px; /* Fonta izmērs */
+        }
+
+        .form-group .password-info {
+            font-size: 12px; /* Fonta izmērs */
+            color: #666; /* Teksta krāsa */
+        }
+
+        .btn {
+            width: 100%; /* Pogas platums vienāds ar konteineru */
+            background-color: #007bff; /* Pogas fona krāsa */
+            color: #fff; /* Teksta krāsa uz pogas */
+            border: none; /* Bez pogas rāmja */
+            padding: 10px; /* Apmales ap tekstu uz pogas */
+            border-radius: 4px; /* Stūru apaļošana uz pogas */
+            cursor: pointer; /* Maina kursoru uz pārveduma */
+            font-size: 16px; /* Fonta izmērs */
+            transition: background-color 0.3s ease; /* Pāreja uz pogas fona krāsu */
+        }
+
+        .btn:hover {
+            background-color: #0056b3; /* Maina pogas fona krāsu uz pārveduma */
+        }
+
+        .error-message {
+            color: red; /* Kļūdas ziņojuma teksta krāsa */
+            font-size: 12px; /* Fonta izmērs */
+            margin-top: 5px; /* Augšējā atstarpe */
+            display: none; /* Sākotnēji paslēpt kļūdas ziņojumu */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Sign up</h1>
+        </div>
+        <form id="signup-form" action="{{ url_for('signup') }}" method="POST">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name">
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username">
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" name="email" id="email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" maxlength="15">
+                <p class="password-info">Parolei jābūt 8–15 rakstzīmju garai un jāsatur vismaz viens cipars un viena lielā burta rakstzīme.</p>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" name="confirm_password" id="confirm_password">
+            </div>
+            <button type="submit" class="btn">Sign up</button>
+            <p id="error-message" class="error-message">Parolei jāsatur vismaz viens cipars un viena lielā burta rakstzīme.</p>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("signup-form").addEventListener("submit", function(event) {
+            var password = document.getElementById("password").value;
+            var hasUpperCase = /[A-Z]/.test(password);
+            var hasDigit = /\d/.test(password);
+
+            if (!hasUpperCase || !hasDigit) {
+                event.preventDefault(); // Novērst formu iesniegšanu
+                document.getElementById("error-message").style.display = "block";
+            }
+        });
+    </script>
+</body>
+</html>

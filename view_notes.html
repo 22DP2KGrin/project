@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+    <style>
+        body {
+            margin: 0; /* Ķermeņa marķieris bez atkāpēm */
+            padding: 0; /* Ķermeņa polsterēšana bez atkāpēm */
+            background-image: url('https://i.pinimg.com/474x/00/29/10/002910294c7c801e813afec531fd6f38.jpg'); /* Fona attēla URL */
+            background-size: cover; /* Fona attēla izmēra pielāgošana */
+            background-position: center; /* Fona attēla pozicionēšana centrā */
+        }
+
+        .container {
+            padding: 20px; /* Polsterēšana iekšpusē */
+            text-align: center; /* Teksta līdzināšana centrā */
+        }
+
+        .search-container {
+            display: flex; /* Flexible izkārtojums */
+            align-items: center; /* Vienkāršošana vertikāli */
+            justify-content: center; /* Horizontālā līdzināšana */
+            margin-bottom: 20px; /* Atkāpe apakšā */
+        }
+
+        .search-input {
+            padding: 8px; /* Polsterēšana */
+            font-size: 16px; /* Fonta lielums */
+            border-radius: 5px; /* Ielaušanas rāmja raķešu izlīdzināšana */
+            border: 1px solid #ccc; /* Ielaušanas rāmja rāmja robeža */
+        }
+
+        .search-btn {
+            padding: 8px 16px; /* Polsterēšana */
+            margin-left: 10px; /* Atkāpe pa kreisi */
+            background-color: #007bff; /* Fons */
+            color: #fff; /* Teksta krāsa */
+            border: none; /* Bez rāmja */
+            border-radius: 5px; /* Raķešu raķešu izlīdzināšana */
+            cursor: pointer; /* Peles kursors */
+            font-size: 16px; /* Fonta izmērs */
+            transition: background-color 0.3s ease; /* Pāreja */
+        }
+
+        .search-btn:hover {
+            background-color: #0056b3; /* Fona krāsas maiņa pārslēgšanās laikā */
+        }
+
+        .note {
+            border: 1px solid #ccc; /* Ierakstu rāmja robeža */
+            padding: 20px; /* Polsterēšana */
+            margin-bottom: 20px; /* Atkāpe apakšā */
+            background-color: rgba(255, 255, 255, 0.8); /* Fona krāsa ar caurspīdīgumu */
+            border-radius: 10px; /* Ierakstu raķešu izlīdzināšana */
+        }
+
+        h2 {
+            color: #333; /* Virsraksta krāsa */
+        }
+
+        .btn {
+            margin-top: 20px; /* Atkāpe augšup */
+            margin-bottom: 20px; /* Atkāpe apakšā */
+            background-color: #007bff; /* Fona krāsa */
+            color: #fff; /* Teksta krāsa */
+            border: none; /* Bez rāmja */
+            padding: 10px 20px; /* Polsterēšana */
+            border-radius: 5px; /* Raķešu izlīdzināšana */
+            cursor: pointer; /* Peles kursors */
+            font-size: 16px; /* Fonta izmērs */
+            transition: background-color 0.3s ease; /* Pāreja */
+            justify-self: center; /* Izlīdzināt pa vidu */
+        }
+
+        .btn:hover {
+            background-color: #0056b3; /* Fona krāsas maiņa pārslēgšanās laikā */
+        }
+
+        .btn-edit,
+        .btn-delete {
+            background-color: #007bff; /* Fona krāsa */
+            color: #fff; /* Teksta krāsa */
+            border: none; /* Bez rāmja */
+            padding: 10px 20px; /* Polsterēšana */
+            border-radius: 5px; /* Raķešu izlīdzināšana */
+            cursor: pointer; /* Peles kursors */
+            font-size: 14px; /* Fonta izmērs */
+            transition: background-color 0.3s ease; /* Pāreja */
+        }
+
+        .btn-edit:hover,
+        .btn-delete:hover {
+            background-color: #0056b3; /* Fona krāsas maiņa pārslēgšanās laikā */
+        }
+
+        .notes-container {
+            display: grid; /* Režģveida izkārtojums */
+            grid-template-columns: repeat(2, 1fr); /* Divas kolonnas ar vienādu platumu */
+            gap: 20px; /* Atstarpe starp kolonnām */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Enter a note title</h2>
+        <!-- Search container with input field and search button -->
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-input" placeholder="Search notes">
+            <input type="button" onclick="filterNotes()" class="search-btn" value="Search">
+        </div>
+
+        <!-- Container for notes -->
+        <div class="notes-container">
+            <!-- Wishlist section -->
+            <div>
+                <h2>Wishlist</h2>
+                <!-- List of notes in the wishlist -->
+                <ul class="notes" id="wishlistNotes">
+                    <!-- Loop through notes and display wishlist notes -->
+                    {% for note in notes %}
+                        {% if note[3] == 'wishlist' %}
+                            <li class="note">
+                                <h2>{{ note[1] }}</h2>
+                                <p>{{ note[2] }}</p>
+                                <p>Folder: {{ note[3] }}</p>
+                                <div>
+                                    <button onclick="location.href='{{ url_for('edit_note', id=note[0]) }}'" class="btn-edit">Edit</button>
+                                    <form action="{{ url_for('delete_note', id=note[0]) }}" method="post">
+                                        <button type="submit" class="btn-delete">Delete</button>
+                                    </form>
+                                </div>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Watched section -->
+            <div>
+                <h2>Watched</h2>
+                <!-- List of notes in the watched folder -->
+                <ul class="notes" id="watchedNotes">
+                    <!-- Loop through notes and display watched notes -->
+                    {% for note in notes %}
+                        {% if note[3] == 'watched' %}
+                            <li class="note">
+                                <h2>{{ note[1] }}</h2>
+                                <p>{{ note[2] }}</p>
+                                <p>Folder: {{ note[3] }}</p>
+                                <div>
+                                    <button onclick="location.href='{{ url_for('edit_note', id=note[0]) }}'" class="btn-edit">Edit</button>
+                                    <form action="{{ url_for('delete_note', id=note[0]) }}" method="post">
+                                        <button type="submit" class="btn-delete">Delete</button>
+                                    </form>
+                                </div>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function filterNotes() {
+            var searchText = document.getElementById('searchInput').value.toLowerCase();
+            var notes = document.querySelectorAll('.note');
+
+            notes.forEach(function(note) {
+                var noteText = note.textContent.toLowerCase();
+                if (noteText.indexOf(searchText) !== -1) {
+                    note.style.display = "block";
+                } else {
+                    note.style.display = "none";
+                }
+            });
+        }
+
+        // Sort notes alphabetically
+        var wishlistNotes = document.getElementById('wishlistNotes');
+        var watchedNotes = document.getElementById('watchedNotes');
+
+        sortNotes(wishlistNotes);
+        sortNotes(watchedNotes);
+
+        function sortNotes(container) {
+            var notes = container.getElementsByClassName('note');
+            var sortedNotes = Array.from(notes).sort(function(a, b) {
+                var titleA = a.getElementsByTagName('h2')[0].innerText.toLowerCase();
+                var titleB = b.getElementsByTagName('h2')[0].innerText.toLowerCase();
+                if (titleA < titleB) return -1;
+                if (titleA > titleB) return 1;
+                return 0;
+            });
+
+            for (var i = 0; i < sortedNotes.length; i++) {
+                container.appendChild(sortedNotes[i]);
+            }
+        }
+    </script>
+
+    <!-- Button to go to homepage -->
+    <button onclick="location.href='{{ url_for('index') }}'" class="btn">Home</button>
+</body>
+</html>

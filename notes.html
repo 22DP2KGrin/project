@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Stili elementu centrēšanai */
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif; /* Fonta tips */
+            background-image: url('https://i.pinimg.com/474x/00/29/10/002910294c7c801e813afec531fd6f38.jpg'); /* Fona attēls */
+            background-size: cover; /* Fona attēla mērogošana */
+            background-position: center; /* Fona attēla pozīcija */
+        }
+
+        .container {
+            text-align: center;
+            width: 300px; /* Konteineru platumu */
+            background-color: rgba(255, 255, 255, 0.8); /* Caurspīdīgs baltais fons konteineram */
+            padding: 20px; /* Iekšējie atstarpes */
+            border-radius: 10px; /* Stūru apaļošana konteineram */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Konteineram ēna */
+        }
+
+        .header {
+            margin-bottom: 20px; /* Atstarpe zem galvenes */
+        }
+
+        .form-group {
+            margin-bottom: 20px; /* Atstarpe starp lauku grupām */
+            text-align: left; /* Teksta izlīdzināšana pa kreisi */
+        }
+
+        .form-group label {
+            display: block; /* Bloka elements */
+            margin-bottom: 5px; /* Atstarpe starp etiķeti un ievades lauku */
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%; /* Aizpilda pieejamo platumu */
+            box-sizing: border-box; /* Iekļaut apmales un rāmīti platuma aprēķināšanā */
+            padding: 5px; /* Atstarpes ap ievades laukiem */
+        }
+
+        .btn-container {
+            margin-top: 20px; /* Atstarpe virs pogas */
+        }
+
+        .btn {
+            margin-right: 10px; /* Atstarpe starp pogām */
+            background-color: #007bff; /* Pogas fona krāsa */
+            color: #fff; /* Teksta krāsa uz pogas */
+            border: none; /* Bez rāmja */
+            padding: 10px 20px; /* Atstarpes iekšā */
+            border-radius: 5px; /* Stūru apaļošana */
+            cursor: pointer; /* Maina kursoru virs pārveduma */
+            font-size: 16px; /* Teksta izmērs */
+            transition: background-color 0.3s ease; /* Pāreja uz pogas fona krāsu */
+            text-decoration: none; /* Bez saites pazīmes */
+        }
+
+        .btn:hover {
+            background-color: #0056b3; /* Maina fona krāsu uz pārveduma */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Virsraksts -->
+        <h2 class="header">Create note</h2>
+
+        <!-- Forma, lai pievienotu jaunu piezīmi -->
+        <form action="{{ url_for('add_note') }}" method="post">
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="content">Content:</label>
+                <textarea id="content" name="content" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="folder">Folder:</label>
+                <select id="folder" name="folder">
+                    <option value="wishlist">Wishlist</option>
+                    <option value="watched">Watched</option>
+                    <!-- Pievienojiet citus mapju nosaukumus pēc vēlēšanās -->
+                </select>
+            </div>
+            <input type="hidden" name="user_id" value="{{ user_id }}"> <!-- Slēptais lauks ar lietotāja ID -->
+            <button type="submit" class="btn">Add note</button>
+        </form>
+
+        <!-- Poga, lai pārietu uz visas piezīmes skatu lapu -->
+        <div class="btn-container">
+            <button onclick="location.href='{{ url_for('view_notes') }}'" class="btn">View note</button>
+        </div>
+    </div>
+</body>
+</html>

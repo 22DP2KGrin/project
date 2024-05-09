@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piezīmes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Kopējie stili */
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif; /* Izvēlamies fontu */
+        }
+
+        /* Stili fona attēlam */
+        .background-container {
+            background-image: url('https://i.pinimg.com/474x/00/29/10/002910294c7c801e813afec531fd6f38.jpg');
+            background-size: cover;
+            background-position: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Lielāks indekss, lai fons atrastos aiz galvenā satura */
+        }
+
+        /* Konteineris ar saturu */
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 1; /* Lai galvenais saturs atrastos priekšplānā */
+            color: #000; /* Teksta krāsa */
+        }
+
+        /* Galvene */
+        .header {
+            margin-bottom: 20px; /* Atstarpe zem galvenes */
+        }
+
+        /* Saites */
+        .links {
+            margin-top: 20px; /* Atstarpe virs saitēm */
+        }
+
+        /* Stili pogām */
+        .btn {
+            background-color: #007bff; /* Fona krāsa */
+            color: #fff; /* Teksta krāsa */
+            border: none; /* Bez apmales */
+            padding: 10px 20px; /* Ievades lauka apmales */
+            border-radius: 5px; /* Stūru noapaļošana */
+            cursor: pointer; /* Maina kursoru pārvietošanas laikā */
+            font-size: 16px; /* Teksta izmērs */
+            transition: background-color 0.3s ease; /* Pāreja uz fona krāsu */
+            text-decoration: none; /* Bez zemsvītrām */
+        }
+
+        /* Stili pogām, kad tiek norādīts virs tām */
+        .btn:hover {
+            background-color: #0056b3; /* Maina fona krāsu, kad pārvietojat kursoru virs tām */
+        }
+    </style>
+</head>
+<body>
+    <div class="background-container"></div> <!-- Fona konteineris -->
+    <div class="container">
+        <div class="header">
+            <h1>Labdien!</h1> <!-- Galvenes teksts -->
+            <p style="font-size: 24px;">Laipni lūdzam kino žurnālā!</p> <!-- Teksts ar lielu fonta izmēru -->
+            <p style="font-size: 20px;">Programma jūsu tiešsaistes piezīmēm. Šeit varat atstāt savas piezīmes par filmām vai seriāliem, ko skatījāties vai vēlējāties.</p> <!-- Teksts ar lielu fonta izmēru -->
+        </div>
+        <div class="links">
+            <a href="{{ url_for('login') }}" class="btn">Log in</a> <!-- Pogas saite uz pieteikšanās lapu -->
+            <a href="{{ url_for('signup') }}" class="btn">Sign up</a> <!-- Pogas saite uz reģistrācijas lapu -->
+        </div>
+    </div>
+</body>
+</html>
